@@ -1,0 +1,80 @@
+@import "font-awesome.css"
+@import "_variables"
+@import "_util/mixin"
+@import "highlight"
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html, body, #container{
+  height: 100%
+}
+body{
+  background: color-background
+  font: font-size font-sans
+  -webkit-text-size-adjust: 100%
+}
+a {
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+  }
+}
+input, button {
+  margin: 0
+  padding: 0
+  &::-moz-focus-inner {
+    border: 0
+    padding: 0
+  }
+}
+
+.content {
+  max-width: 1024px;
+  margin: 0 auto;
+}
+main {
+  display: block;
+  margin: 0 auto;
+  padding-top: 60px;
+  min-height: calc(100vh - 50px);
+  max-width: 1024px;
+}
+.left, .alignleft {
+  float: left
+}
+.right, .alignright {
+  float: right
+}
+.clearfix {
+  *zoom: 1;
+  /* 兼容 IE 低版本 */
+  &::after, &::before {
+    content: '';
+    display: block;
+    clear: both; 
+  }
+}
+
+/* 后面一定要去研究条件语句 */
+if sidebar and sidebar isnt bottom
+  #main
+    @media mq-normal
+      column(main-column)
+
+if sidebar is left
+  @media mq-normal
+    #main
+      float: right
+
+@import '_partial/header';
+@import '_partial/footer';
+@import '_partial/home';
+@import '_partial/post';
+@import '_partial/archive';
+@import 'components/index';
+
+if sidebar
+  @import "_partial/sidebar"

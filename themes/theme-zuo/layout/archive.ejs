@@ -1,0 +1,14 @@
+<!--
+  添加归档页模板：其实结构跟首页差不多，只是不显示文章内容而已
+  之后记得添加归档页的样式 css/_partial/archive.stylhexo
+-->
+<section class="archive">
+  <ul class="post-archive">
+    <% page.posts.each(function (post) { %>
+      <li class="post-item">
+        <span class="post-date"><%= date(post.date, "YYYY-MM-DD") %></span>
+        <a class="post-title" href="<%- url_for(post.path) %>"><%= post.title %></a>
+      </li>
+    <% }) %>
+  </ul>
+</section>

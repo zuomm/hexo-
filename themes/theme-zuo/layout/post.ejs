@@ -1,0 +1,16 @@
+<!--
+  文章模板，新建后，首页才能获取page里面的的数据
+  变量 page 表示的是文章的数据，而不是首页的文章数据集合
+  这里是其他导航路由共用文章模板
+-->
+<% if (is_post()) { %>
+  <%- partial('passage') %>
+<% } else if (page.type === 'tags') {%>
+  <%- partial('tags') %>
+<% } else if (page.type === 'categories') {%>
+  <%- partial('categories') %>
+<% } else if (page.type === 'about') {%>
+  <%- partial('about') %>
+<% } else if(page.type === 'friends') { %>
+  <%- partial('friends') %>
+<% } %>

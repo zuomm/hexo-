@@ -1,0 +1,48 @@
+<!--
+  文章模板，新建后，首页才能获取page里面的的数据
+  变量 page 表示的是文章的数据，而不是首页的文章数据集合
+-->
+<article class="post">
+  <div class="post-meta">
+    <span>
+      <i class="fa fa-calendar"></i><%- page.date.format("YYYY-MM-DD") %>
+    </span>
+    <% if(page.categories.length > 0) { %>
+      <span>
+        | <a href="<%- url_for(page.categories.data[0].path) %>"><i class="fa fa-bookmark"></i><%- page.categories.data[0].name %></a>
+      </span>
+    <% } %>
+    <% if(page.lock === true) { %>
+      <span>
+        | <i class="fa fa-lock"></i>LOCK
+      </span>
+    <% } else { %>
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    <% } %>
+  </div>
+  <div class="post-title">
+    <h2 class="title"><%= page.title %></h2>
+  </div>
+  <!-- <div class="post-meta">
+    <span class="post-time"><%- date(page.date, "YYYY-MM-DD") %></span>
+  </div> -->
+  <% if(page.cover){ %>
+    <div class="passage-cover">
+      <figure style="background-image:url(<%- page.cover %>);"></figure>
+    </div>
+  <% } %>
+  <div class="post-content">
+    <%- page.more %>
+  </div>
+  <!--开启目录-->
+  <%- partial('components/toc') %>
+  <% if(page.tags.length > 0) { %>
+    <div class="passage-tags">
+    <% for(let tag of page.tags.data) { %> 
+      <a href="<%- url_for(tag.path) %>"><i class="fa fa-tags"></i><%- tag.name %></a>
+    <% } %>
+    </div>
+  <% } %>
+</article>

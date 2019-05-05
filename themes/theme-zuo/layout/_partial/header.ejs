@@ -1,0 +1,16 @@
+<header class="header">
+  <div class="blog-title">
+    <a href="<%- url_for() %>" class="logo"><%= config.title %></a> | <span class="motto"><%= theme.motto %></span>
+  </div>
+  <nav class="navbar">
+    <ul class="menu">
+      <% for (let link of theme.menu) { %>
+        <li class="menu-item">
+          <a href="<%- url_for(link.path) %>" class="menu-item-link"><%= link.name %></a> 
+        </li>
+      <% } %>
+    </ul>
+  </nav>
+</header>
+<div id="site-process"></div>
+<script type="text/javascript" src="/js/scroll.js"></script>

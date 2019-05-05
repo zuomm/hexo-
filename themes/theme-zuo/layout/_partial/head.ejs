@@ -1,0 +1,70 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!--favicon.ico-->
+  <% if (theme.favicon){ %>
+    <link rel="icon" href="<%- theme.favicon.icon %>">
+    <link rel="apple-touch-icon" href="<%- theme.favicon.touch_icon %>">
+  <% } %>
+  <!--标题-->
+  <%
+    let title = page.title || ''
+    if (is_archive()) { <!--检查目前是否为存档页面。-->
+      title = '归档';
+      if (is_month()) { <!--检查目前是否为月度归档页面-->
+        title += ':' + page.year + '/' + page.month;
+      } else if (is_year()) { <!--检查目前是否为年度归档页面-->
+        title += ':' + page.year;
+      }
+    } else if (is_category()) { <!--检查目前是否为分类归档页面-->
+      title = '分类: ' + page.category;
+    } else if (is_tag()) { <!--检查目前是否为标签归档页面-->
+      title = '标签: ' + page.tag;
+    } else if (page.type === "about") {
+      title = "关于"
+    } else if (page.type === "tags") {
+      title = "标签"
+    } else if (page.type === "categories") {
+      title = "分类"
+    } else if (page.type === "friends") {
+      title = "友链"
+    }
+    title = title ? title | config.title : config.title;
+  %>
+  <title><%= title %></title>
+  <!-- k d t SEO优化-->
+  <% if ((page.tags && page.tags.length) || page.categories && page.categories.length) { %>
+    <meta name="keywords" content="<% page.categories.forEach((category)=>{ %> <%= category.name %> <% }); %> <% page.tags.forEach((tag)=>{%> <%= tag.name %> <% }); %>" />
+  <% } else { %>
+    <meta  name="keywords" content="<%= theme.keywords %>">
+  <% } %>
+  <!--description 描述-->
+  <%
+    let description;
+    const re = /<[^>]+>|\n|"/gim;
+    if (is_post()) {
+      description = page.description || page.excerpt.replace(re, '');
+    }
+    description = description || theme.description || config.description;
+  %>
+  <meta name="description" content="<%= description %>">
+  <% if (theme.rss) { %> 
+    <link rel="alternate" href="<%- theme.rss %>" title="<%= config.title %>" type="application/atom+xml">
+  <% } %>
+  <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.1/dist/av-min.js" async></script>
+  <% if(theme.mathjax) { %>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+  <% } %>
+  <!--评论引进Valine-->
+  <% if(theme.leancloud.comment) { %>
+    <script src="//unpkg.com/valine/dist/Valine.min.js" async></script>
+  <% } %>
+
+  <%- partial('components/config') %>
+  <!--引入外部js-->
+  <%- js(['/vendor/sha256.min.js', '/js/auth.js', '/js/index.js', '/vendor/qrcode.min.js']) %>
+  <!--引入外部css-->
+  <%- css('css/style') %>
+  <%- partial('components/analytics') %>
+</head>
